@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudhansu Sekhar Panda — AI/ML Engineer & SDE-1</title>
+<meta name="description" content="Portfolio of Sudhansu Sekhar Panda — AI/ML Engineer specializing in PyTorch, LangChain, production-grade AI systems, and next-gen cognitive architectures.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream: 'var(--cream)',
+        'cream-2': 'var(--cream-2)',
+        'cream-3': 'var(--cream-3)',
+        ink: 'var(--ink)',
+        'ink-2': 'var(--ink-2)',
+        acid: 'var(--acid)',
+        'acid-2': 'var(--acid-2)',
+        muted: 'var(--muted)',
+        whatsapp: '#25D366'
+      },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        sans: ['Inter Tight', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* ===============================================
+   ROOT VARIABLES & BASE STYLES
+   =============================================== */
+:root {
+  --cream: #F1ECE0;
+  --cream-2: #E8E1D2;
+  --cream-3: #DDD5C2;
+  --ink: #0E0E0C;
+  --ink-2: #1A1815;
+  --acid: #C8FF3D;
+  --acid-2: #A6E600;
+  --muted: #6E6A5E;
+  --line: rgba(14,14,12,0.14);
+  --whatsapp: #25D366;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter Tight', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.025em;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===============================================
+   TEXTURES & UTILITY ANIMATIONS
+   =============================================== */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--acid);
+  z-index: 101;
+  transition: width 0.1s linear;
+}
+
+.blob {
+  filter: blur(80px);
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  50% { transform: scale(1.6); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+/* ===============================================
+   REVEAL ANIMATIONS
+   =============================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60%) rotate(4deg);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.word.in {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+/* ===============================================
+   TECH CHIPS (CLICKABLE)
+   =============================================== */
+.tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.4em 1em;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+  position: relative;
+}
+
+.tech:hover {
+  background: var(--ink);
+  color: var(--acid);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.tech .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--acid);
+  display: inline-block;
+}
+
+.tech:hover .dot {
+  animation: pulse-dot 0.6s ease;
+}
+
+/* ===============================================
+   FLOATING BUTTONS (AI, WHATSAPP, BACK TO TOP)
+   =============================================== */
+.ai-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 95;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 12px 18px 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-fab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+}
+
+.ai-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--acid);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ai-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--acid);
+  opacity: 0.5;
+  animation: pulse 2s infinite;
+}
+
+.whatsapp-fab {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 90;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 40px rgba(37,211,102,0.45);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.08) rotate(-6deg);
+  box-shadow: 0 16px 50px rgba(37,211,102,0.55);
+}
+
+.whatsapp-fab::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  opacity: 0.3;
+  animation: pulse 2.5s infinite;
+  z-index: -1;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 90px;
+  left: 24px;
+  z-index: 89;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+/* ===============================================
+   AI CHATBOT PANEL
+   =============================================== */
+.ai-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  z-index: 96;
+  width: min(380px, calc(100vw - 48px));
+  height: 520px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.18);
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ai-panel.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ai-header {
+  padding: 16px 20px;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ai-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ai-message {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.ai-message.bot {
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+
+.ai-message.user {
+  background: var(--ink);
+  color: var(--cream);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.ai-suggestions {
+  padding: 8px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.ai-suggestion-btn {
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s;
+}
+
+.ai-suggestion-btn:hover {
+  background: var(--ink);
+  color: var(--acid);
+  border-color: var(--ink);
+}
+
+.ai-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ai-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream-2);
+  font-size: 0.85rem;
+  outline: none;
+  font-family: 'Inter Tight', sans-serif;
+}
+
+.ai-input:focus {
+  border-color: var(--ink);
+}
+
+.ai-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--acid);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.ai-send:hover {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+/* ===============================================
+   NEURAL SVG VISUALIZATION
+   =============================================== */
+.nnode { fill: var(--ink); transition: all 0.3s; }
+.nnode-acid { fill: var(--acid); stroke: var(--ink); stroke-width: 0.4; }
+.nlink { stroke: var(--ink); stroke-width: 0.4; opacity: 0.18; fill: none; }
+.nsignal { fill: var(--acid); }
+
+/* ===============================================
+   MAGNETIC BUTTONS
+   =============================================== */
+.cta-magnetic, .cta-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 1.1em 2em;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  text-decoration: none;
+  will-change: transform;
+}
+
+.cta-magnetic {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.cta-magnetic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--acid);
+  transform: translateY(101%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.cta-magnetic:hover { color: var(--ink); }
+.cta-magnetic:hover::before { transform: translateY(0); }
+.cta-magnetic > * { position: relative; z-index: 1; }
+
+.cta-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.cta-outline:hover {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* ===============================================
+   LINKS & HOBBY CARDS
+   =============================================== */
+.ulink {
+  position: relative;
+  display: inline-block;
+}
+
+.ulink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.ulink:hover::after {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: redraw 0.8s 0.4s forwards;
+}
+
+@keyframes redraw {
+  from { transform-origin: left; transform: scaleX(0); }
+  to { transform-origin: left; transform: scaleX(1); }
+}
+
+.hobby-icon path, .hobby-icon circle, .hobby-icon line, .hobby-icon polyline, .hobby-icon rect {
+  stroke: currentColor;
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hobby-icon .filled { fill: currentColor; }
+
+.hobby-card {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px 24px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--cream-2);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.hobby-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.hobby-card:hover { color: var(--cream); border-color: var(--ink); }
+.hobby-card:hover::before { transform: translateY(0); }
+.hobby-card > * { position: relative; z-index: 1; transform: translateZ(20px); }
+
+/* ===============================================
+   MISC ELEMENTS
+   =============================================== */
+.counter { font-variant-numeric: tabular-nums; }
+
+.case-study { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.case-arrow { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; }
+.case-study:hover .case-arrow { transform: translate(8px, -8px) rotate(45deg); }
+
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--acid);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.3s, height 0.3s;
+}
+
+@media (max-width: 1024px) { .cursor-dot { display: none; } }
+
+/* ===============================================
+   MOBILE NAVIGATION
+   =============================================== */
+.mobile-toggle { display: none; }
+@media (max-width: 768px) {
+  .desktop-nav { display: none; }
+  .mobile-toggle { display: flex; }
+}
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: var(--ink);
+  color: var(--cream);
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 80px 32px 32px;
+}
+
+.mobile-drawer.open { transform: translateX(0); }
+.mobile-drawer a {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(241,236,224,0.1);
+}
+
+/* ===============================================
+   COMMAND PALETTE
+   =============================================== */
+.cmd-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(14,14,12,0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 15vh 20px 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.cmd-overlay.open { opacity: 1; pointer-events: auto; }
+
+.cmd-palette {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 560px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+  transform: translateY(-20px) scale(0.98);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cmd-overlay.open .cmd-palette { transform: translateY(0) scale(1); }
+
+.cmd-input {
+  width: 100%;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 15px;
+  outline: none;
+  font-family: 'Inter Tight', sans-serif;
+}
+
+.cmd-input::placeholder { color: var(--muted); }
+
+.cmd-list { padding: 8px; max-height: 320px; overflow-y: auto; }
+
+.cmd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.cmd-item.active, .cmd-item:hover { background: var(--ink); color: var(--acid); }
+.cmd-item .cmd-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
+
+.cmd-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===============================================
+   RESUME MODAL & PRINT
+   =============================================== */
+.resume-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: rgba(14,14,12,0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.resume-modal.open { opacity: 1; pointer-events: auto; }
+
+.resume-paper {
+  background: white;
+  max-width: 800px;
+  width: 100%;
+  padding: 60px 56px;
+  color: #1a1a1a;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  border-radius: 4px;
+  transform: translateY(40px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 40px;
+}
+
+.resume-modal.open .resume-paper { transform: translateY(0); }
+
+.resume-actions {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: -40px -40px 24px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.resume-actions button, .resume-actions a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: white;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.resume-actions button:hover, .resume-actions a:hover {
+  background: #1a1a1a;
+  color: white;
+  border-color: #1a1a1a;
+}
+
+@media print {
+  body { background: white !important; }
+  body > *:not(.resume-modal) { display: none !important; }
+  .resume-modal { position: static !important; background: white !important; padding: 0 !important; opacity: 1 !important; pointer-events: auto !important; }
+  .resume-paper { box-shadow: none !important; padding: 0 !important; max-width: 100% !important; transform: none !important; }
+  .resume-actions { display: none !important; }
+  .grain, .cursor-dot, .ai-fab, .whatsapp-fab, .back-to-top, .progress-bar, nav, footer { display: none !important; }
+  @page { margin: 1.5cm; }
+}
+
+/* ===============================================
+   RESPONSIVE
+   =============================================== */
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(3rem, 14vw, 6rem) !important; line-height: 0.95 !important; }
+  .resume-paper { padding: 32px 24px; }
+  .ai-fab { padding: 10px 14px 10px 12px; font-size: 0.7rem; }
+  .ai-fab span:last-child { display: none; }
+  .ai-fab { padding: 12px; }
+  .ai-panel { height: 400px; bottom: 70px; }
+}
+</style>
+</head>
+<body class="bg-cream text-ink">
+
+<div class="grain"></div>
+<div class="cursor-dot" id="cursor"></div>
+<div class="progress-bar" id="progress"></div>
+
+<!-- ===============================================
+     NAVIGATION
+     =============================================== -->
+<nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-10 py-5 backdrop-blur-sm bg-cream/80 border-b border-ink/5">
+  <div class="flex items-center justify-between max-w-[1600px] mx-auto">
+    <a href="#top" class="flex items-center gap-2 group">
+      <span class="font-display text-xl font-medium tracking-tight">Sudhansu</span>
+      <span class="w-2 h-2 rounded-full bg-acid group-hover:scale-150 transition-transform"></span>
+    </a>
+    <div class="hidden lg:flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.2em]">
+      <a href="#manifesto" class="hover:text-acid-2 transition-colors">Manifesto</a>
+      <a href="#work" class="hover:text-acid-2 transition-colors">Work</a>
+      <a href="#stack" class="hover:text-acid-2 transition-colors">Stack</a>
+      <a href="#life" class="hover:text-acid-2 transition-colors">Life</a>
+      <a href="#frontier" class="hover:text-acid-2 transition-colors">Frontier</a>
+      <button id="cmdTrigger" class="flex items-center gap-2 px-3 py-1.5 border border-ink/20 rounded-md hover:border-ink hover:bg-ink hover:text-cream transition-all">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Menu</span>
+        <span class="text-[9px] opacity-50">⌘K</span>
+      </button>
+      <button id="resumeBtn" class="hover:text-acid-2 transition-colors">Resume</button>
+      <a href="#contact" class="cta-magnetic !py-2.5 !px-5 !text-[11px]">
+        <span class="w-1.5 h-1.5 rounded-full bg-acid"></span>
+        <span>Available for hire</span>
+      </a>
+    </div>
+    <div class="hidden lg:flex items-center gap-3 ml-4 font-mono text-[10px] uppercase tracking-widest text-muted">
+      <span class="w-1 h-1 rounded-full bg-acid animate-pulse"></span>
+      <span id="liveClock">--:--:--</span>
+      <span>IST</span>
+    </div>
+    <button id="mobileToggle" class="mobile-toggle items-center justify-center w-10 h-10 rounded-full bg-ink text-cream">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <button id="mobileClose" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center text-cream">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <a href="#manifesto" class="mobile-link">Manifesto</a>
+  <a href="#work" class="mobile-link">Work</a>
+  <a href="#stack" class="mobile-link">Stack</a>
+  <a href="#credentials" class="mobile-link">Credentials</a>
+  <a href="#life" class="mobile-link">Life</a>
+  <a href="#frontier" class="mobile-link">Frontier</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <button id="resumeBtnMobile" class="text-left mt-6 font-display text-2xl text-acid">View Resume →</button>
+  <a href="https://wa.me/917008997117" target="_blank" class="mt-4 font-mono text-xs uppercase tracking-widest text-cream/60">WhatsApp ↗</a>
+</div>
+
+<!-- ===============================================
+     HERO SECTION
+     =============================================== -->
+<section id="top" class="relative min-h-screen flex items-center px-6 md:px-10 pt-32 pb-20 overflow-hidden">
+  <div class="blob" style="background:#C8FF3D; width:600px; height:600px; top:-150px; right:-150px; opacity:0.5;"></div>
+  <div class="blob" style="background:#A6E600; width:500px; height:500px; bottom:-200px; left:-150px; opacity:0.25;"></div>
+  
+  <div class="relative w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div class="lg:col-span-7 relative z-10">
+      <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-8 reveal flex items-center gap-3">
+        <span class="w-10 h-px bg-ink/40"></span>
+        <span>Portfolio · Bhubaneswar, IN</span>
+      </div>
+      <h1 class="font-display hero-title text-[clamp(3.5rem,11vw,11rem)] leading-[0.88] font-light">
+        <span class="word">Engineering</span><br>
+        <span class="word italic font-normal">intelligence</span><br>
+        <span class="word">that</span> <span class="word relative inline-block font-medium">ships<span class="absolute -right-3 top-2 w-3 h-3 rounded-full bg-acid"></span></span>.
+      </h1>
+      <div class="mt-12 max-w-xl reveal reveal-d2">
+        <p class="text-lg md:text-xl text-ink/75 leading-relaxed">
+          I'm <span class="font-medium text-ink">Sudhansu Sekhar Panda</span> — an AI/ML engineer who builds production systems that don't sit in notebooks. From PINNs predicting F1 tyre degradation to LLM agents cutting MTTR by 
+          <span class="font-mono text-cream bg-ink px-1.5 py-0.5 rounded text-sm mx-0.5">94.6%</span>, 
+          I ship work that survives contact with real users.
+        </p>
+      </div>
+      <div class="mt-10 flex flex-wrap items-center gap-4 reveal reveal-d3">
+        <a href="#contact" class="cta-magnetic magnetic">
+          <span>Start a conversation</span>
+          <span class="text-acid">→</span>
+        </a>
+        <button id="resumeBtnHero" class="cta-outline magnetic">
+          <span>View Resume</span>
+          <span>↗</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="lg:col-span-5 relative min-h-[420px] lg:min-h-[600px]">
+      <div class="absolute inset-0 flex items-center justify-center reveal reveal-d2">
+        <svg viewBox="0 0 500 600" class="w-full h-full">
+          <path d="M 250,80 C 380,80 460,180 460,300 C 460,440 360,520 250,520 C 140,520 40,440 40,300 C 40,180 120,80 250,80 Z" fill="none" stroke="#0E0E0C" stroke-width="0.3" opacity="0.15" stroke-dasharray="2 4"/>
+          <g id="networkGroup"></g>
+          <text x="60" y="40" font-family="JetBrains Mono" font-size="9" fill="#6E6A5E" letter-spacing="2">INPUT_LAYERS</text>
+          <text x="350" y="560" font-family="JetBrains Mono" font-size="9" fill="#6E6A5E" letter-spacing="2">OUTPUT_NEURONS</text>
+          <text x="180" y="300" font-family="Fraunces" font-size="14" fill="#0E0E0C" font-style="italic" opacity="0.6">latent space</text>
+        </svg>
+        <div class="absolute top-4 right-0 lg:right-4 bg-ink text-cream rounded-full px-3 py-1.5 font-mono text-[10px] tracking-wider">
+          <span class="text-acid">●</span> SYSTEM ONLINE
+        </div>
+        <div class="absolute bottom-8 left-0 lg:left-4 bg-cream-2 border border-ink/10 rounded-2xl px-4 py-3 font-mono text-[10px] max-w-[180px]">
+          <div class="text-muted mb-1">→ live_inference</div>
+          <div class="text-ink">91.2% accuracy</div>
+          <div class="text-acid-2 mt-0.5">↑ 74.9% fewer false positives</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
+    <span>Scroll</span>
+    <div class="w-px h-12 bg-ink/20 relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1/2 bg-ink animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     MARQUEE STRIP
+     =============================================== -->
+<section class="py-6 bg-ink text-cream overflow-hidden border-y border-ink">
+  <div class="marquee-track">
+    <div class="flex items-center gap-12 px-6 font-display text-3xl md:text-5xl whitespace-nowrap">
+      <span>PyTorch</span><span class="text-acid">✦</span><span class="italic">LangChain</span><span class="text-acid">✦</span><span>LLM Systems</span><span class="text-acid">✦</span><span class="italic">Causal Inference</span><span class="text-acid">✦</span><span>Distributed AI</span><span class="text-acid">✦</span><span class="italic">Hugging Face</span><span class="text-acid">✦</span>
+    </div>
+    <div class="flex items-center gap-12 px-6 font-display text-3xl md:text-5xl whitespace-nowrap">
+      <span>PyTorch</span><span class="text-acid">✦</span><span class="italic">LangChain</span><span class="text-acid">✦</span><span>LLM Systems</span><span class="text-acid">✦</span><span class="italic">Causal Inference</span><span class="text-acid">✦</span><span>Distributed AI</span><span class="text-acid">✦</span><span class="italic">Hugging Face</span><span class="text-acid">✦</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     MANIFESTO SECTION (EDITORIAL)
+     =============================================== -->
+<section id="manifesto" class="relative px-6 md:px-10 py-40 md:py-56 overflow-hidden">
+  <div class="max-w-[1000px] mx-auto">
+    <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-12 reveal">§ 01 — The Philosophy</div>
+    <h2 class="font-display text-4xl md:text-6xl leading-[1.1] reveal reveal-d1 mb-12">
+      We don't just train models. We train <span class="italic">systems to think</span>.
+    </h2>
+    <div class="space-y-8 text-lg md:text-xl text-ink/75 leading-relaxed reveal reveal-d2">
+      <p>
+        The industry is saturated with notebooks that achieve 99% accuracy on a static dataset, only to collapse the moment they touch production. That is not engineering. That is a science experiment. My approach is different. I believe in <span class="italic text-ink">physics-infused AI</span>—where deep learning doesn't replace domain knowledge, it amplifies it. A neural network shouldn't just fit a curve; it should respect the underlying differential equations of the physical system it models.
+      </p>
+      <p>
+        I build systems that reason. Whether it's an LLM-powered Root Cause Analysis agent that slashes MTTR by 94.6%, or a Physics-Informed Neural Network predicting F1 tyre degradation with 0.054s RMSE, the goal is always the same: <span class="bg-acid px-2 -mx-1 -my-0.5 rounded text-ink">to deploy intelligence that survives contact with reality.</span>
+      </p>
+      <p>
+        But I'm not stopping at what works today. The future of this field belongs to architectures that don't just process tokens, but understand continuous time, physical laws, and compositional logic. It belongs to systems that learn without forgetting, reason without hallucinating, and scale without breaking. That is the frontier I am actively exploring.
+      </p>
+    </div>
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 reveal reveal-d3">
+      <div class="border-l border-ink/20 pl-6">
+        <div class="font-display text-2xl mb-2">Physics-Infused</div>
+        <p class="text-sm text-muted leading-relaxed">Embedding physical constraints (ODEs, PDEs) directly into loss functions to guarantee physically plausible predictions.</p>
+      </div>
+      <div class="border-l border-ink/20 pl-6">
+        <div class="font-display text-2xl mb-2">Causal Reasoning</div>
+        <p class="text-sm text-muted leading-relaxed">Moving beyond correlational ML to interventions—understanding what happens when we change the system, not just observe it.</p>
+      </div>
+      <div class="border-l border-ink/20 pl-6">
+        <div class="font-display text-2xl mb-2">Production-First</div>
+        <p class="text-sm text-muted leading-relaxed">Designing for sub-100ms inference, 99.97% uptime, and Dockerized deployment from day one. Notebooks are for prototyping; production is for engineering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     ABOUT SECTION
+     =============================================== -->
+<section id="about" class="relative px-6 md:px-10 py-32 md:py-48">
+  <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="lg:col-span-3">
+      <div class="sticky top-32">
+        <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-4 reveal">§ 02</div>
+        <h2 class="font-display text-3xl md:text-4xl reveal reveal-d1">The<br><span class="italic">short story.</span></h2>
+      </div>
+    </div>
+    <div class="lg:col-span-9 lg:pl-8">
+      <p class="font-display text-2xl md:text-4xl leading-[1.3] text-ink/85 reveal reveal-d2">
+        Aspiring AI/ML Engineer with hands-on experience building <span class="italic text-ink">production-grade systems</span> using PyTorch, LangChain, and Docker. I've shipped an LLM-powered Root Cause Analysis system that <span class="bg-acid px-2 -mx-1 -my-0.5 rounded">reduced MTTR by 94.6%</span> and a Physics-Informed Neural Network for F1 tyre degradation with 0.054s RMSE.
+      </p>
+      <p class="mt-8 text-lg text-ink/70 leading-relaxed max-w-2xl reveal reveal-d3">
+        Proficient in full-stack AI development, causal inference, and deploying scalable solutions on Hugging Face Spaces. Passionate about applying AI to solve real-world problems in distributed systems, motorsports, and beyond.
+      </p>
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 reveal reveal-d4">
+        <div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mb-2">Based in</div><div class="font-display text-lg">Bhubaneswar, India</div></div>
+        <div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mb-2">Focus</div><div class="font-display text-lg">AI/ML · SDE-1</div></div>
+        <div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mb-2">Email</div><a href="mailto:ssekhar.panda06@gmail.com" class="font-display text-lg ulink">ssekhar.panda06</a></div>
+        <div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mb-2">Phone</div><div class="font-display text-lg">+91 70089 97117</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     STACK SECTION
+     =============================================== -->
+<section id="stack" class="relative px-6 md:px-10 py-24 md:py-32 bg-cream-2 border-y border-ink/5">
+  <div class="max-w-[1400px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div>
+        <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-4 reveal">§ 03 — Stack</div>
+        <h2 class="font-display text-5xl md:text-7xl reveal reveal-d1">Tools of the<br><span class="italic">trade.</span></h2>
+      </div>
+      <p class="font-mono text-xs text-muted max-w-sm leading-relaxed reveal reveal-d2">↓ Click any tool to run an instant Google search.</p>
+    </div>
+    <div class="space-y-12">
+      <div class="reveal">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">Languages</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="Java programming language"><span class="dot"></span>Java</a>
+          <a class="tech" data-search="Python programming language"><span class="dot"></span>Python</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d1">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">Backend</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="Spring Boot framework"><span class="dot"></span>Spring Boot</a>
+          <a class="tech" data-search="Spring MVC framework"><span class="dot"></span>Spring MVC</a>
+          <a class="tech" data-search="Spring Core framework"><span class="dot"></span>Spring Core</a>
+          <a class="tech" data-search="Hibernate ORM Java"><span class="dot"></span>Hibernate</a>
+          <a class="tech" data-search="Java Servlets"><span class="dot"></span>Servlet</a>
+          <a class="tech" data-search="JSP JavaServer Pages"><span class="dot"></span>JSP</a>
+          <a class="tech" data-search="JDBC Java Database Connectivity"><span class="dot"></span>JDBC</a>
+          <a class="tech" data-search="REST API design"><span class="dot"></span>REST API</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">AI / ML</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="PyTorch machine learning framework"><span class="dot"></span>PyTorch</a>
+          <a class="tech" data-search="TensorFlow deep learning"><span class="dot"></span>TensorFlow</a>
+          <a class="tech" data-search="Keras neural network API"><span class="dot"></span>Keras</a>
+          <a class="tech" data-search="Scikit-learn machine learning Python"><span class="dot"></span>Scikit-learn</a>
+          <a class="tech" data-search="OpenCV computer vision"><span class="dot"></span>OpenCV</a>
+          <a class="tech" data-search="YOLOv8 object detection"><span class="dot"></span>YOLOv8</a>
+          <a class="tech" data-search="NLTK natural language toolkit"><span class="dot"></span>NLTK</a>
+          <a class="tech" data-search="HuggingFace Transformers library"><span class="dot"></span>HuggingFace Transformers</a>
+          <a class="tech" data-search="LangChain LLM framework"><span class="dot"></span>LangChain</a>
+          <a class="tech" data-search="LangGraph agent framework"><span class="dot"></span>LangGraph</a>
+          <a class="tech" data-search="FAISS vector search"><span class="dot"></span>FAISS</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d3">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">Data</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="NumPy Python"><span class="dot"></span>NumPy</a>
+          <a class="tech" data-search="Pandas Python data analysis"><span class="dot"></span>Pandas</a>
+          <a class="tech" data-search="MySQL database"><span class="dot"></span>MySQL</a>
+          <a class="tech" data-search="MongoDB NoSQL"><span class="dot"></span>MongoDB</a>
+          <a class="tech" data-search="Redis cache"><span class="dot"></span>Redis</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d4">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">DevOps / Tools</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="Git version control"><span class="dot"></span>Git</a>
+          <a class="tech" data-search="GitHub"><span class="dot"></span>GitHub</a>
+          <a class="tech" data-search="Docker containerization"><span class="dot"></span>Docker</a>
+          <a class="tech" data-search="FastAPI Python"><span class="dot"></span>FastAPI</a>
+          <a class="tech" data-search="Streamlit Python"><span class="dot"></span>Streamlit</a>
+          <a class="tech" data-search="Flask Python web framework"><span class="dot"></span>Flask</a>
+          <a class="tech" data-search="Celery Python task queue"><span class="dot"></span>Celery</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-5">Core CS</div>
+        <div class="flex flex-wrap gap-3">
+          <a class="tech" data-search="Data Structures and Algorithms"><span class="dot"></span>DSA</a>
+          <a class="tech" data-search="Object Oriented Programming"><span class="dot"></span>OOP</a>
+          <a class="tech" data-search="Distributed Systems"><span class="dot"></span>Distributed Systems</a>
+          <a class="tech" data-search="Operating Systems concepts"><span class="dot"></span>Operating Systems</a>
+          <a class="tech" data-search="Database Management Systems"><span class="dot"></span>DBMS</a>
+          <a class="tech" data-search="Computer Networks"><span class="dot"></span>Computer Networks</a>
+          <a class="tech" data-search="System Design LLD HLD"><span class="dot"></span>System Design / LLD-HLD</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     WORK / CASE STUDIES SECTION
+     =============================================== -->
+<section id="work" class="relative px-6 md:px-10 py-32 md:py-48">
+  <div class="max-w-[1400px] mx-auto">
+    <div class="mb-24 md:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-4 reveal">§ 04 — Selected Work</div>
+        <h2 class="font-display text-5xl md:text-7xl reveal reveal-d1 leading-[0.95]">Case studies<br><span class="italic">in shipping AI.</span></h2>
+      </div>
+      <p class="font-mono text-xs text-muted max-w-sm leading-relaxed reveal reveal-d2">Two production systems — one predicting tyre physics in motorsport, one diagnosing production incidents with LLM agents.</p>
+    </div>
+    
+    <!-- Case Study 01: F1 Tyre -->
+    <article class="case-study reveal mb-32 md:mb-48">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div class="lg:col-span-4 lg:sticky lg:top-32 self-start">
+          <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-6">Case 01 / Motorsport AI</div>
+          <h3 class="font-display text-4xl md:text-5xl leading-[1.05] mb-6">F1 Tyre<br><span class="italic">Degradation</span><br><span class="text-acid-2">& Race Strategy</span><br>Simulation Engine.</h3>
+          <div class="flex flex-wrap gap-2 mt-8">
+            <a class="tech" data-search="F1 Tyre Degradation PINN PyTorch GitHub"><span class="dot"></span>GitHub ↗</a>
+            <a class="tech" data-search="Hugging Face Spaces F1 Strategy"><span class="dot"></span>Hugging Face ↗</a>
+          </div>
+          <div class="mt-8 font-mono text-[10px] uppercase tracking-widest text-muted space-y-1.5">
+            <div>Stack —</div>
+            <div class="text-ink/70 normal-case font-mono text-[11px] leading-relaxed">Python · PyTorch · NumPy · Pandas · Matplotlib · Gradio · FastAPI · Docker · Hugging Face Spaces</div>
+          </div>
+        </div>
+        <div class="lg:col-span-8 space-y-12">
+          <div class="relative aspect-[16/10] rounded-3xl overflow-hidden bg-ink p-8 md:p-12">
+            <svg viewBox="0 0 800 500" class="w-full h-full">
+              <path d="M 40,300 C 100,200 200,150 300,180 S 500,250 600,200 S 750,300 760,350" fill="none" stroke="#C8FF3D" stroke-width="2" opacity="0.6"/>
+              <path d="M 40,300 C 100,200 200,150 300,180 S 500,250 600,200 S 750,300 760,350" fill="none" stroke="#C8FF3D" stroke-width="2" opacity="0.3" stroke-dasharray="2 8"/>
+              <g id="tyreMarkers"></g>
+              <path d="M 40,350 C 150,340 250,330 350,310 S 550,260 650,210 S 750,180 760,170" fill="none" stroke="#F1ECE0" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+              <text x="40" y="60" font-family="JetBrains Mono" font-size="10" fill="#C8FF3D" letter-spacing="2">LAP_TIME_PREDICTION_PINN</text>
+              <text x="40" y="450" font-family="JetBrains Mono" font-size="9" fill="#6E6A5E">R² = 0.975 · RMSE = 0.054s</text>
+              <text x="600" y="80" font-family="Fraunces" font-size="32" fill="#F1ECE0" font-style="italic">C1 — C5</text>
+              <text x="600" y="105" font-family="JetBrains Mono" font-size="8" fill="#6E6A5E" letter-spacing="1">PIRELLI COMPOUNDS</text>
+            </svg>
+            <div class="absolute top-6 right-6 bg-acid text-ink rounded-full px-3 py-1 font-mono text-[10px]">● LIVE ON HF SPACES</div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div><div class="font-display text-5xl md:text-6xl text-ink counter" data-target="18">0</div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">% accuracy gain over baseline physics models</div></div>
+            <div><div class="font-display text-5xl md:text-6xl text-ink"><span class="counter" data-target="0.054" data-decimals="3">0</span><span class="text-2xl">s</span></div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">RMSE — lap time prediction error</div></div>
+            <div><div class="font-display text-5xl md:text-6xl text-ink"><span class="counter" data-target="2.3" data-decimals="1">0</span><span class="text-2xl">s</span></div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">reduced simulated race time</div></div>
+          </div>
+          <div class="space-y-6 text-base md:text-lg leading-relaxed text-ink/75">
+            <p><span class="font-medium text-ink">Physics-Informed Neural Network</span> trained on 10,000+ synthetic F1 samples with temperature and fuel-load effects. The PINN unifies classical tyre physics with deep learning — giving motorsport strategists a model that's both interpretable and accurate.</p>
+            <p>The Monte Carlo race-strategy optimizer recommends optimal pit-stop windows and compound choices under uncertainty — weather, safety cars, competitor behavior — with 95% confidence intervals and real-time what-if analysis.</p>
+            <p>Shipped as an interactive F1 strategy dashboard with sub-100ms inference. Four tabs cover lap prediction, stint analysis, race strategy, and compound comparison. Containerized with Docker, deployed on Hugging Face Spaces.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <!-- Case Study 02: RCA System -->
+    <article class="case-study reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div class="lg:col-span-8 lg:order-1 order-2 space-y-12">
+          <div class="relative aspect-[16/10] rounded-3xl overflow-hidden bg-cream-3 p-8 md:p-12 border border-ink/10">
+            <svg viewBox="0 0 800 500" class="w-full h-full">
+              <text x="40" y="60" font-family="JetBrains Mono" font-size="10" fill="#6E6A5E" letter-spacing="2">RCA_AGENT_PIPELINE</text>
+              <g>
+                <circle cx="120" cy="250" r="32" fill="#0E0E0C"/><text x="120" y="255" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#C8FF3D">INPUT</text>
+                <circle cx="280" cy="180" r="28" fill="#1A1815" stroke="#C8FF3D" stroke-width="1"/><text x="280" y="184" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#F1ECE0">RAG</text>
+                <circle cx="280" cy="320" r="28" fill="#1A1815" stroke="#C8FF3D" stroke-width="1"/><text x="280" y="324" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#F1ECE0">CAUSAL</text>
+                <circle cx="440" cy="180" r="28" fill="#1A1815" stroke="#C8FF3D" stroke-width="1"/><text x="440" y="184" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#F1ECE0">LANG-GRAPH</text>
+                <circle cx="440" cy="320" r="28" fill="#1A1815" stroke="#C8FF3D" stroke-width="1"/><text x="440" y="324" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#F1ECE0">AGENT</text>
+                <circle cx="600" cy="250" r="32" fill="#C8FF3D"/><text x="600" y="255" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#0E0E0C">ROOT</text>
+                <circle cx="730" cy="250" r="20" fill="#0E0E0C"/><text x="730" y="255" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#C8FF3D">✓</text>
+              </g>
+              <path d="M 152,250 C 200,250 220,210 252,190" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 152,250 C 200,250 220,290 252,310" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 308,180 C 360,180 380,180 412,180" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 308,320 C 360,320 380,320 412,320" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 468,180 C 520,180 540,220 568,240" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 468,320 C 520,320 540,280 568,260" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M 632,250 C 670,250 690,250 710,250" stroke="#0E0E0C" stroke-width="1" fill="none" opacity="0.5"/>
+              <path id="signalPath" d="M 152,250 C 200,250 220,210 252,190 L 308,180 C 360,180 380,180 412,180 L 468,180 C 520,180 540,220 568,240 L 632,250 C 670,250 690,250 710,250" fill="none" stroke="none"/>
+              <circle r="4" fill="#C8FF3D"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#signalPath"/></animateMotion></circle>
+              <text x="40" y="450" font-family="JetBrains Mono" font-size="9" fill="#6E6A5E">SAFETY-CONSTRAINED · ZERO VIOLATIONS · 10K+ SIMULATED RUNS</text>
+            </svg>
+            <div class="absolute top-6 right-6 bg-ink text-acid rounded-full px-3 py-1 font-mono text-[10px]">● 94.6% MTTR REDUCTION</div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div><div class="font-display text-5xl md:text-6xl text-ink"><span class="counter" data-target="94.6" data-decimals="1">0</span><span class="text-2xl">%</span></div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">MTTR reduction — 147 → 8 min</div></div>
+            <div><div class="font-display text-5xl md:text-6xl text-ink"><span class="counter" data-target="91.2" data-decimals="1">0</span><span class="text-2xl">%</span></div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">root cause identification accuracy</div></div>
+            <div><div class="font-display text-5xl md:text-6xl text-ink"><span class="counter" data-target="74.9" data-decimals="1">0</span><span class="text-2xl">%</span></div><div class="font-mono text-[10px] uppercase tracking-widest text-muted mt-2">fewer false positives</div></div>
+          </div>
+          <div class="space-y-6 text-base md:text-lg leading-relaxed text-ink/75">
+            <p>An <span class="font-medium text-ink">AI-driven Root Cause Analysis</span> system that automatically identifies failure root causes. Built on causal discovery, RAG, and LangGraph agents — the platform doesn't just match patterns, it reasons about them.</p>
+            <p>Production-grade LLM deployment using LangChain, FAISS, PyTorch, and Docker — hosted on Hugging Face Spaces with 99.97% uptime. The safety-constrained agent ensures zero violations across 10,000+ simulated runs.</p>
+            <p>Built on QLoRA-fine-tuned <span class="font-mono text-ink">CodeLlama-7B</span> with HuggingFace PEFT and bitsandbytes — squeezing serious reasoning into a deployable footprint.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-4 lg:order-2 order-1 lg:sticky lg:top-32 self-start lg:pl-4">
+          <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-6">Case 02 / SRE AI</div>
+          <h3 class="font-display text-4xl md:text-5xl leading-[1.05] mb-6">LLM-Powered<br><span class="italic">Root Cause</span><br><span class="text-acid-2">Analysis</span> System.</h3>
+          <div class="flex flex-wrap gap-2 mt-8">
+            <a class="tech" data-search="LLM Root Cause Analysis System GitHub"><span class="dot"></span>GitHub ↗</a>
+            <a class="tech" data-search="Hugging Face RCA Agent"><span class="dot"></span>Hugging Face ↗</a>
+          </div>
+          <div class="mt-8 font-mono text-[10px] uppercase tracking-widest text-muted space-y-1.5">
+            <div>Stack —</div>
+            <div class="text-ink/70 normal-case font-mono text-[11px] leading-relaxed">Python · PyTorch · HuggingFace PEFT · QLoRA · CodeLlama-7B · bitsandbytes · FastAPI · Gradio</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===============================================
+     CREDENTIALS SECTION
+     =============================================== -->
+<section id="credentials" class="relative px-6 md:px-10 py-32 md:py-48 bg-ink text-cream overflow-hidden">
+  <div class="blob" style="background:#C8FF3D; width:500px; height:500px; top:-150px; right:-200px; opacity:0.15;"></div>
+  <div class="relative max-w-[1400px] mx-auto">
+    <div class="mb-20 reveal">
+      <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-cream/50 mb-4">§ 05 — Credentials</div>
+      <h2 class="font-display text-5xl md:text-7xl leading-[0.95]">Education &<br><span class="italic text-acid">certifications.</span></h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div class="lg:col-span-7 reveal reveal-d1">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-acid mb-8">Education</div>
+        <div class="space-y-2">
+          <div class="font-display text-3xl md:text-4xl leading-tight">Biju Patnaik University of<br><span class="italic">Technology</span>, Rourkela</div>
+          <div class="font-mono text-xs text-cream/60 mt-4">B.Tech — CSE (Artificial Intelligence & Machine Learning)</div>
+          <div class="flex flex-wrap items-center gap-6 mt-8 pt-8 border-t border-cream/10">
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-cream/40 mb-1">Duration</div><div class="font-display text-lg">11/2022 — 05/2026</div></div>
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-cream/40 mb-1">CGPA</div><div class="font-display text-lg text-acid">7.18</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-5 reveal reveal-d2">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-acid mb-8">Certifications</div>
+        <div class="space-y-3">
+          <a href="https://www.hackerrank.com/profile/ssekhar_panda06" target="_blank" class="block p-5 rounded-2xl border border-cream/15 hover:border-acid hover:bg-cream/5 transition-all">
+            <div class="flex items-start justify-between gap-4">
+              <div><div class="font-display text-xl">Software Engineer</div><div class="font-mono text-[10px] text-cream/50 mt-1">HackerRank Certified</div></div>
+              <span class="text-acid case-arrow">↗</span>
+            </div>
+          </a>
+          <a href="https://www.hackerrank.com/profile/ssekhar_panda06" target="_blank" class="block p-5 rounded-2xl border border-cream/15 hover:border-acid hover:bg-cream/5 transition-all">
+            <div class="flex items-start justify-between gap-4">
+              <div><div class="font-display text-xl">Software Engineer Intern</div><div class="font-mono text-[10px] text-cream/50 mt-1">HackerRank Certified</div></div>
+              <span class="text-acid case-arrow">↗</span>
+            </div>
+          </a>
+          <a href="https://www.hackerrank.com/profile/ssekhar_panda06" target="_blank" class="block p-5 rounded-2xl border border-cream/15 hover:border-acid hover:bg-cream/5 transition-all">
+            <div class="flex items-start justify-between gap-4">
+              <div><div class="font-display text-xl">SQL (Advanced)</div><div class="font-mono text-[10px] text-cream/50 mt-1">HackerRank Certified</div></div>
+              <span class="text-acid case-arrow">↗</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     LIFE / HOBBIES SECTION
+     =============================================== -->
+<section id="life" class="relative px-6 md:px-10 py-32 md:py-48">
+  <div class="max-w-[1400px] mx-auto">
+    <div class="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-4 reveal">§ 06 — Beyond the screen</div>
+        <h2 class="font-display text-5xl md:text-7xl reveal reveal-d1 leading-[0.95]">When the<br><span class="italic">laptop closes.</span></h2>
+      </div>
+      <p class="font-mono text-xs text-muted max-w-sm leading-relaxed reveal reveal-d2">The things that keep the engine running — endurance on the bike, patience in the pool, strategy on the pitch, stillness on the page.</p>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="hobbyGrid">
+      <div class="hobby-card reveal" data-tilt>
+        <svg viewBox="0 0 100 100" class="hobby-icon w-12 h-12 mb-6 text-ink"><circle cx="25" cy="65" r="12"/><circle cx="75" cy="65" r="12"/><path d="M 25,65 L 45,40 L 60,40 M 45,40 L 55,65 M 35,30 L 50,30 L 55,40 M 60,40 L 70,40 L 75,65 M 55,65 L 45,40 M 60,40 L 65,25"/><circle cx="25" cy="65" r="2" class="filled"/><circle cx="75" cy="65" r="2" class="filled"/></svg>
+        <h3 class="font-display text-2xl md:text-3xl mb-2">Cycling</h3>
+        <p class="text-sm opacity-70 leading-relaxed">Long-distance rides — where the rhythm of pedaling mirrors the rhythm of debugging.</p>
+      </div>
+      <div class="hobby-card reveal reveal-d1" data-tilt>
+        <svg viewBox="0 0 100 100" class="hobby-icon w-12 h-12 mb-6 text-ink"><path d="M 20,30 C 30,25 40,25 50,30 C 60,25 70,25 80,30 L 80,75 C 70,70 60,70 50,75 C 40,70 30,70 20,75 Z"/><line x1="50" y1="30" x2="50" y2="75"/><path d="M 30,40 L 45,42 M 30,50 L 45,52 M 55,42 L 70,40 M 55,52 L 70,50"/></svg>
+        <h3 class="font-display text-2xl md:text-3xl mb-2">Reading</h3>
+        <p class="text-sm opacity-70 leading-relaxed">From systems-design papers to philosophy — input shapes output.</p>
+      </div>
+      <div class="hobby-card reveal reveal-d2" data-tilt>
+        <svg viewBox="0 0 100 100" class="hobby-icon w-12 h-12 mb-6 text-ink"><circle cx="55" cy="30" r="8"/><path d="M 50,38 C 45,45 35,55 30,60 M 50,38 C 55,50 65,55 70,55 M 45,42 C 40,48 30,52 25,50 M 50,38 L 60,55 M 30,68 C 40,65 50,72 60,68 C 70,65 80,72 85,68"/><path d="M 25,78 C 35,75 45,82 55,78 C 65,75 75,82 85,78"/></svg>
+        <h3 class="font-display text-2xl md:text-3xl mb-2">Swimming</h3>
+        <p class="text-sm opacity-70 leading-relaxed">Quiet laps — the only place where the only voice is breath.</p>
+      </div>
+      <div class="hobby-card reveal reveal-d3" data-tilt>
+        <svg viewBox="0 0 100 100" class="hobby-icon w-12 h-12 mb-6 text-ink"><circle cx="30" cy="35" r="12"/><line x1="30" y1="23" x2="30" y2="20"/><line x1="38" y1="27" x2="40" y2="25"/><line x1="38" y1="43" x2="40" y2="45"/><line x1="30" y1="47" x2="30" y2="50"/><line x1="22" y1="43" x2="20" y2="45"/><line x1="22" y1="27" x2="20" y2="25"/><path d="M 42,35 C 55,30 65,35 70,45 L 75,40 L 78,48 L 72,52 L 70,48 C 65,55 55,55 45,50 Z"/><line x1="65" y1="40" x2="75" y2="48" stroke-width="2"/><path d="M 30,47 C 35,52 40,55 45,55"/></svg>
+        <h3 class="font-display text-2xl md:text-3xl mb-2">Cricket</h3>
+        <p class="text-sm opacity-70 leading-relaxed">A game of patience, pattern, and decision under pressure — much like ML.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     THE FRONTIER / CURRENTLY EXPLORING
+     =============================================== -->
+<section id="frontier" class="relative px-6 md:px-10 py-32 md:py-48 bg-ink text-cream overflow-hidden">
+  <div class="blob" style="background:#C8FF3D; width:600px; height:600px; top:-200px; left:-200px; opacity:0.1;"></div>
+  <div class="blob" style="background:#A6E600; width:500px; height:500px; bottom:-200px; right:-150px; opacity:0.08;"></div>
+  <div class="relative max-w-[1400px] mx-auto">
+    <div class="mb-20">
+      <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-cream/50 mb-4 reveal">§ 07 — The Frontier</div>
+      <h2 class="font-display text-5xl md:text-7xl reveal reveal-d1 leading-[0.95]">Currently<br><span class="italic text-acid">exploring.</span></h2>
+      <p class="mt-8 text-lg md:text-xl text-cream/70 leading-relaxed max-w-3xl reveal reveal-d2">Physics-infused AI, dynamic temporal modeling, neuro-symbolic reasoning, and production-grade systems engineering. My roadmap is split across four parallel tracks — <span class="italic">specialized architectures</span>, <span class="italic">distributed infrastructure</span>, <span class="italic">cognitive systems</span>, and <span class="italic">continual learning</span>.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20">
+      <!-- Track A -->
+      <div class="reveal reveal-d2">
+        <div class="flex items-center gap-3 mb-8"><span class="font-mono text-[11px] uppercase tracking-widest text-acid">Track A</span><span class="h-px flex-1 bg-cream/20"></span></div>
+        <h3 class="font-display text-2xl md:text-3xl mb-8 leading-tight">Advanced Data &<br><span class="italic">Specialized Architecture</span></h3>
+        <div class="mb-6 p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q1 – Q2</div>
+          <div class="font-display text-xl mb-3">Enterprise Graph RAG</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Implementing hybrid search with multi-hop query routing. Moving past chunking + embedding vector searches to map non-linear semantic relationships via asynchronous graph databases (Neo4j). At query time, combines traditional vector index retrieval with localized Graph Convolutional Networks (GCN) and community summary extraction.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q3 – Q4</div>
+          <div class="font-display text-xl mb-3">Operator Learning & State Space Models</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Exploring Mamba, FNOs for time-series, and continuous-time architectures. Diving into Neural ODEs, S4/Mamba architectures, and Fourier Neural Operators — mapping entire function spaces to function spaces rather than coordinate-point solutions.</p>
+        </div>
+      </div>
+      <!-- Track B -->
+      <div class="reveal reveal-d3">
+        <div class="flex items-center gap-3 mb-8"><span class="font-mono text-[11px] uppercase tracking-widest text-acid">Track B</span><span class="h-px flex-1 bg-cream/20"></span></div>
+        <h3 class="font-display text-2xl md:text-3xl mb-8 leading-tight">Distributed Infra &<br><span class="italic">High-Performance Computing</span></h3>
+        <div class="mb-6 p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q1 – Q2</div>
+          <div class="font-display text-xl mb-3">Rust for ML Inference</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Mastering the Candle framework (Hugging Face's pure Rust ML framework), ONNX runtimes, and CUDA bindings. Bridging the gap by compiling PyTorch/JAX computation graphs via MLIR/TVM down to LLVM bitcode, then loading static graphs into Rust bindings (tch-rs, ort, candle) to bypass raw Python runtimes entirely.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q3 – Q4</div>
+          <div class="font-display text-xl mb-3">Distributed Training & GPU Profiling</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Deep-diving into PyTorch FSDP, NCCL communication, and GPU profiling. Evolving from DDP to Megatron-style model parallelism — Tensor Parallelism (intra-layer, splitting weight matrices across GPUs via All-Reduce) and Pipeline Parallelism (inter-layer, using 1F1B execution schedules to minimize idle "bubble" time).</p>
+        </div>
+      </div>
+      <!-- Track C -->
+      <div class="reveal reveal-d2">
+        <div class="flex items-center gap-3 mb-8"><span class="font-mono text-[11px] uppercase tracking-widest text-acid">Track C</span><span class="h-px flex-1 bg-cream/20"></span></div>
+        <h3 class="font-display text-2xl md:text-3xl mb-8 leading-tight">Next-Gen Cognitive &<br><span class="italic">Generative Systems</span></h3>
+        <div class="mb-6 p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q1 – Q2</div>
+          <div class="font-display text-xl mb-3">World Models & JEPA</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Studying Joint Embedding Predictive Architectures (Yann LeCun's vision). Moving away from generative reconstruction toward predicting in latent space. Designing systems that learn abstract representations of the world by predicting the state of the environment without pixel-level reconstruction, enabling planning and reasoning.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q3 – Q4</div>
+          <div class="font-display text-xl mb-3">Neuro-Symbolic AI</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Integrating deep learning (perception) with symbolic logic (reasoning). Using differentiable logic solvers to achieve true compositional generalization. This allows systems to learn rules from data while obeying strict logical constraints, drastically reducing hallucinations and improving zero-shot transfer.</p>
+        </div>
+      </div>
+      <!-- Track D -->
+      <div class="reveal reveal-d3">
+        <div class="flex items-center gap-3 mb-8"><span class="font-mono text-[11px] uppercase tracking-widest text-acid">Track D</span><span class="h-px flex-1 bg-cream/20"></span></div>
+        <h3 class="font-display text-2xl md:text-3xl mb-8 leading-tight">Continual &<br><span class="italic">Adaptive Learning</span></h3>
+        <div class="mb-6 p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q1 – Q2</div>
+          <div class="font-display text-xl mb-3">Liquid Neural Networks (LNNs)</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Implementing time-continuous recurrent neural networks that adapt their behavior on the fly. Unlike fixed-parameter Transformers, LNNs use ODE-based solvers to adjust dynamics based on input sequence length. This results in models that are highly robust to noise and can reason over irregularly sampled, asynchronous time-series data.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-acid mb-3">Q3 – Q4</div>
+          <div class="font-display text-xl mb-3">Overcoming Catastrophic Forgetting</div>
+          <p class="text-sm text-cream/60 leading-relaxed">Researching Elastic Weight Consolidation (EWC) and replay buffers for lifelong learning. The goal is to train models sequentially on new tasks without degrading performance on old ones. Implementing parameter isolation and dynamic network expansion to preserve knowledge while enabling zero-shot adaptation to new environments.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Deep Dive Grid -->
+    <div>
+      <div class="font-mono text-[11px] uppercase tracking-widest text-cream/50 mb-8 reveal">↓ Deep Dive — Core Concepts</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal">
+          <div class="font-display text-xl text-acid mb-3">Neural ODEs</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">dh(t)/dt = f(h(t), t, θ)</div>
+          <p class="text-xs text-cream/60 leading-relaxed">The mathematical predecessor to Liquid Neural Networks. Defines network output as a continuous-time vector field. A black-box ODE solver (Euler, Runge-Kutta) computes forward/backward passes. Enables O(1) memory via the adjoint sensitivity method and natively handles irregularly-sampled time-series data without imputation.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d1">
+          <div class="font-display text-xl text-acid mb-3">State Space Models (S4 / Mamba)</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">x(t) → h(t) → y(t) · O(N) complexity</div>
+          <p class="text-xs text-cream/60 leading-relaxed">The leading Transformer alternative for long-context sequences. Maps 1D input to N-dimensional latent space via continuous linear ODEs, then discretizes for hardware. Achieves O(N) linear time vs. O(N²) quadratic self-attention, with a hardware-aware parallel scan algorithm optimized for GPUs.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d2">
+          <div class="font-display text-xl text-acid mb-3">Fourier Neural Operators</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">FFT → W⊗ → iFFT · Mesh-independent</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Operator Learning maps entire function spaces to function spaces (learning the general rule of fluid dynamics across any geometry). FNOs parameterize integral kernels in the frequency domain. Train on low-resolution grids, evaluate on ultra-high-resolution without retraining — up to 10⁵× speedup over numerical solvers.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d3">
+          <div class="font-display text-xl text-acid mb-3">Megatron Model Parallelism</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">TP (intra-layer) + PP (inter-layer)</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Tensor Parallelism splits individual weight matrices across GPUs (e.g., attention heads across 8 GPUs via All-Reduce). Pipeline Parallelism splits layers between GPUs using the 1F1B (One Forward, One Backward) scheduler to minimize the "bubble" time where GPUs sit idle waiting for activations.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal">
+          <div class="font-display text-xl text-acid mb-3">Graph Execution Compilers</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">MLIR · TorchScript · XLA → LLVM</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Production pipelines bypass raw Python runtimes. Tools like Apache TVM or MLIR compile high-level PyTorch/JAX structures down to LLVM bitcode optimized for CUDA, ROCm, or x86. These compiled static graphs (.onnx, .pt) are then loaded into Rust via tch-rs, ort, or candle.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d1">
+          <div class="font-display text-xl text-acid mb-3">Graph RAG</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">Neo4j + Vector Index + GCN</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Maps non-linear semantic relationships that standard vector distances fail to capture. Uses an LLM to extract entities and predicates from a corpus to build an asynchronous graph database. At query time, combines traditional vector index retrieval with localized Graph Convolutional Networks or community summary extraction.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d2">
+          <div class="font-display text-xl text-acid mb-3">Liquid Neural Networks</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">ODE-based · Time-Continuous</div>
+          <p class="text-xs text-cream/60 leading-relaxed">A class of continuous-time recurrent neural networks where the network's parameters are dynamically adjusted by the input itself. Unlike fixed-weight RNNs, LNNs solve ODEs in real-time, making them incredibly robust to noise, capable of reasoning over asynchronous time-series, and highly interpretable due to their small parameter count.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d3">
+          <div class="font-display text-xl text-acid mb-3">JEPA & World Models</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">Latent Space Prediction</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Joint Embedding Predictive Architectures abandon pixel-level generative reconstruction. Instead, they learn abstract representations by predicting the latent state of the world given an action. This avoids the waste of generative models on unpredictable details (like exact pixel noise) and focuses compute on planning and reasoning.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal">
+          <div class="font-display text-xl text-acid mb-3">Neuro-Symbolic AI</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">Deep Learning + Symbolic Logic</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Combines the perception power of deep neural networks with the strict reasoning capabilities of symbolic logic engines. By making logic differentiable, models can learn compositional rules from data while guaranteeing logical constraints, enabling true out-of-distribution generalization and eliminating LLM hallucinations.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d1">
+          <div class="font-display text-xl text-acid mb-3">Mixture of Experts (MoE)</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">Sparse Expert Routing</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Instead of using the entire network for every input, MoE uses a gating network to route tokens to specific "expert" sub-networks. This scales the parameter count of a model to billions without scaling the compute cost, as only a fraction of the network is active during inference for any given sequence.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d2">
+          <div class="font-display text-xl text-acid mb-3">Retrieval-Augmented Diffusion</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">RAG + Diffusion Models</div>
+          <p class="text-xs text-cream/60 leading-relaxed">Combines database retrieval with generative diffusion. Instead of retrieving text for an LLM, the system retrieves structural or stylistic latent vectors to condition a diffusion model. This allows for few-shot generation of high-fidelity, domain-specific outputs without full fine-tuning.</p>
+        </div>
+        <div class="p-6 rounded-2xl border border-cream/10 hover:border-acid/40 transition-all reveal reveal-d3">
+          <div class="font-display text-xl text-acid mb-3">Elastic Weight Consolidation</div>
+          <div class="font-mono text-[10px] text-cream/40 mb-3">Overcoming Catastrophic Forgetting</div>
+          <p class="text-xs text-cream/60 leading-relaxed">A continual learning technique that prevents a neural network from forgetting Task A when trained on Task B. It calculates the importance of each weight for previous tasks (via the Fisher Information Matrix) and penalizes changes to those critical weights, allowing sequential lifelong learning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     HIRING CTA SECTION
+     =============================================== -->
+<section id="contact" class="relative px-6 md:px-10 py-32 md:py-48 bg-cream-2 border-t border-ink/5 overflow-hidden">
+  <div class="blob" style="background:#C8FF3D; width:700px; height:700px; bottom:-300px; right:-200px; opacity:0.35;"></div>
+  <div class="blob" style="background:#A6E600; width:400px; height:400px; top:-150px; left:-100px; opacity:0.2;"></div>
+  <div class="relative max-w-[1400px] mx-auto">
+    <div class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted mb-8 reveal">§ 08 — Hiring</div>
+    <h2 class="font-display text-[clamp(3.5rem,11vw,11rem)] leading-[0.9] font-light reveal reveal-d1">Let's build<br><span class="italic">something</span> that<br><span class="relative inline-block">survives production<span class="absolute -right-4 top-2 w-4 h-4 rounded-full bg-acid"></span></span>.</h2>
+    <div class="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-7 reveal reveal-d2">
+        <p class="text-xl md:text-2xl text-ink/75 leading-relaxed max-w-2xl">I'm currently open to <span class="font-medium text-ink">SDE-1</span> and <span class="font-medium text-ink">ML Engineer</span> roles. If your team ships AI systems that need to actually work — not just demo well — let's talk.</p>
+        <div class="mt-10 flex flex-wrap items-center gap-4">
+          <a href="mailto:ssekhar.panda06@gmail.com" class="cta-magnetic magnetic"><span>ssekhar.panda06@gmail.com</span><span class="text-acid">→</span></a>
+          <a href="https://wa.me/917008997117?text=Hi%20Sudhansu%2C%20I%27d%20like%20to%20discuss%20an%20opportunity" target="_blank" class="cta-outline magnetic" style="border-color: #25D366; color: #25D366;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.549 4.142 1.595 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <a href="tel:+917008997117" class="font-mono text-xs uppercase tracking-[0.2em] ulink">+91 70089 97117</a>
+        </div>
+      </div>
+      <div class="lg:col-span-5 lg:pl-8 reveal reveal-d3">
+        <div class="font-mono text-[11px] uppercase tracking-widest text-muted mb-4">Find me elsewhere</div>
+        <div class="space-y-3">
+          <a href="https://www.linkedin.com/in/sudhansu-sekhar-panda-b459bb264" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">LinkedIn</span><span class="font-mono text-xs text-muted group-hover:text-acid">in/sudhansu-sekhar-panda ↗</span></a>
+          <a href="https://github.com/Sudhansu-Sekhar12" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">GitHub</span><span class="font-mono text-xs text-muted group-hover:text-acid">@Sudhansu-Sekhar12 ↗</span></a>
+          <a href="https://huggingface.co/sudhansu06" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">Hugging Face</span><span class="font-mono text-xs text-muted group-hover:text-acid">@sudhansu06 ↗</span></a>
+          <a href="https://leetcode.com/u/Sudhansu_06/" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">LeetCode</span><span class="font-mono text-xs text-muted group-hover:text-acid">@Sudhansu_06 ↗</span></a>
+          <a href="https://www.kaggle.com/sudhansu06" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">Kaggle</span><span class="font-mono text-xs text-muted group-hover:text-acid">@sudhansu06 ↗</span></a>
+          <a href="https://www.hackerrank.com/profile/ssekhar_panda06" target="_blank" class="flex items-center justify-between p-4 rounded-2xl border border-ink/10 hover:border-ink hover:bg-ink hover:text-cream transition-all group"><span class="font-display text-lg">HackerRank</span><span class="font-mono text-xs text-muted group-hover:text-acid">@ssekhar_panda06 ↗</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================================
+     FOOTER
+     =============================================== -->
+<footer class="px-6 md:px-10 py-12 bg-ink text-cream/60">
+  <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.2em]">
+    <div>© Sudhansu Sekhar Panda — Built with intention.</div>
+    <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-acid"></span><span>System status: Available for hire</span></div>
+  </div>
+</footer>
+
+<!-- ===============================================
+     FLOATING BUTTONS & MODALS
+     =============================================== -->
+<a href="https://wa.me/917008997117?text=Hi%20Sudhansu%2C%20I%27d%20like%20to%20discuss%20an%20opportunity" target="_blank" class="whatsapp-fab" aria-label="WhatsApp Sudhansu">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.549 4.142 1.595 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<button class="back-to-top" id="backTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- AI Assistant Chatbot Button -->
+<div class="ai-fab" id="aiFab">
+  <span class="ai-pulse"></span>
+  <span>AI Assistant</span>
+</div>
+
+<!-- AI Assistant Chatbot Panel -->
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-header">
+    <div>
+      <div class="font-mono text-[10px] uppercase tracking-widest opacity-60">AI Assistant</div>
+      <div class="font-display text-lg mt-1">Sudhansu's Helper</div>
+    </div>
+    <button id="aiClose" class="text-cream/70 hover:text-acid text-2xl leading-none">×</button>
+  </div>
+  <div class="ai-body" id="aiBody">
+    <div class="ai-message bot">Hi! I'm Sudhansu's AI assistant. Ask me about his projects, tech stack, education, or experience.</div>
+  </div>
+  <div class="ai-suggestions">
+    <button class="ai-suggestion-btn" data-q="Tell me about your projects">Projects</button>
+    <button class="ai-suggestion-btn" data-q="What is your tech stack?">Tech Stack</button>
+    <button class="ai-suggestion-btn" data-q="Tell me about your education">Education</button>
+    <button class="ai-suggestion-btn" data-q="How can I contact you?">Contact</button>
+  </div>
+  <div class="ai-input-area">
+    <input type="text" class="ai-input" id="aiInput" placeholder="Type your question..." autocomplete="off">
+    <button class="ai-send" id="aiSend">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Command Palette -->
+<div class="cmd-overlay" id="cmdOverlay">
+  <div class="cmd-palette">
+    <input type="text" class="cmd-input" id="cmdInput" placeholder="Type a command or search..." autocomplete="off">
+    <div class="cmd-list" id="cmdList"></div>
+    <div class="cmd-footer">
+      <span>↑↓ to navigate</span>
+      <span>esc to close</span>
+    </div>
+  </div>
+</div>
+
+<!-- Resume Modal -->
+<div class="resume-modal" id="resumeModal">
+  <div class="resume-paper">
+    <div class="resume-actions no-print">
+      <button onclick="window.print()">⤓ Print / Save as PDF</button>
+      <button onclick="document.getElementById('resumeModal').classList.remove('open')">✕ Close</button>
+    </div>
+    <div style="font-family: 'Inter Tight', sans-serif; color: #1a1a1a;">
+      <div style="border-bottom: 2px solid #1a1a1a; padding-bottom: 16px; margin-bottom: 24px;">
+        <h1 style="font-family: 'Fraunces', serif; font-size: 32px; font-weight: 600; margin: 0 0 4px;">SUDHANSU SEKHAR PANDA</h1>
+        <div style="font-size: 13px; color: #555; margin-bottom: 8px;">B.Tech CSE (AI & ML) | SDE-1 • ML Engineer</div>
+        <div style="font-size: 11px; color: #666; display: flex; flex-wrap: wrap; gap: 12px;">
+          <span>ssekhar.panda06@gmail.com</span><span>•</span><span>+91-7008997117</span><span>•</span><span>Bhubaneswar, India</span><span>•</span><span>LinkedIn</span><span>•</span><span>GitHub</span><span>•</span><span>Leetcode</span>
+        </div>
+      </div>
+      <div style="margin-bottom: 22px;">
+        <h2 style="font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 0 0 10px;">Professional Summary</h2>
+        <p style="font-size: 11.5px; line-height: 1.55; margin: 0; color: #333;">Aspiring AI/ML Engineer with hands-on experience building production-grade systems using PyTorch, LangChain, and Docker. Developed an LLM-powered Root Cause Analysis system that reduced MTTR by 94.6% and achieved 91.2% accuracy, and a Physics-Informed Neural Network for F1 tyre degradation with 0.054s RMSE. Proficient in full-stack AI development, causal inference, and deploying scalable solutions on Hugging Face Spaces. Passionate about applying AI to solve real-world problems in distributed systems, motorsports, and beyond.</p>
+      </div>
+      <div style="margin-bottom: 22px;">
+        <h2 style="font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 0 0 10px;">Education</h2>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong style="font-size: 12px;">Biju Patnaik University of Technology (BPUT) Rourkela, India</strong><span style="font-size: 11px; color: #666;">11/2022 – 05/2026</span></div>
+        <div style="font-size: 11.5px; color: #333;">B.Tech — CSE (Artificial Intelligence & Machine Learning)</div>
+        <div style="font-size: 11.5px; color: #333;">CGPA: 7.18</div>
+      </div>
+      <div style="margin-bottom: 22px;">
+        <h2 style="font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 0 0 10px;">Technical Skills</h2>
+        <div style="font-size: 11px; line-height: 1.7; color: #333;">
+          <div><strong>Languages:</strong> Java, Python</div>
+          <div><strong>Backend:</strong> Spring Boot, Spring MVC, Spring Core, Hibernate, Servlet, JSP, JDBC, REST API</div>
+          <div><strong>AI / ML:</strong> PyTorch, TensorFlow, Keras, Scikit-learn, OpenCV, YOLOv8, NLTK, HuggingFace Transformers, LangChain, LangGraph, FAISS</div>
+          <div><strong>Data:</strong> NumPy, Pandas, Relational (MySQL) & NoSQL (MongoDB, Redis) Databases</div>
+          <div><strong>DevOps / Tools:</strong> Git, GitHub, Docker, FastAPI, Streamlit, Flask, Celery</div>
+          <div><strong>Core CS:</strong> Data Structures & Algorithms, OOP, Distributed Systems, Operating Systems, Relational Database Management (DBMS), Computer Networks, System Design / LLD-HLD</div>
+        </div>
+      </div>
+      <div style="margin-bottom: 22px;">
+        <h2 style="font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 0 0 12px;">Projects</h2>
+        <div style="margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong style="font-size: 12px;">F1 Tyre Degradation & Race Strategy Simulation Engine</strong><span style="font-size: 10px; color: #666;">GitHub ↗ | Hugging Face ↗</span></div>
+          <div style="font-size: 10px; color: #666; margin-bottom: 6px; font-style: italic;">Python, PyTorch, NumPy, Pandas, Matplotlib, Gradio, FastAPI, Docker, Hugging Face Spaces</div>
+          <ul style="font-size: 11px; line-height: 1.55; color: #333; margin: 0; padding-left: 16px;">
+            <li>Improved lap-time prediction accuracy by 18% over baseline physics models by developing a Physics-Informed Neural Network (PINN) in PyTorch, achieving 0.054s RMSE and R² = 0.975 across 5 Pirelli compounds (C1-C5) using 10,000+ synthetic F1 training samples with temperature and fuel load effects.</li>
+            <li>Reduced simulated race time by 2.3 seconds by building a Monte Carlo race strategy optimizer that recommends optimal pit-stop windows and compound choices under uncertainty (weather, safety car, competitor behavior), with 95% confidence intervals and real-time what-if analysis.</li>
+            <li>Shipped a live, interactive F1 strategy dashboard with sub-100ms inference time by deploying the PINN model to Hugging Face Spaces with a Gradio UI, containerized with Docker, featuring 4 interactive tabs for lap prediction, stint analysis, race strategy, and compound comparison.</li>
+          </ul>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><strong style="font-size: 12px;">LLM-powered Root Cause Analysis (RCA) System</strong><span style="font-size: 10px; color: #666;">GitHub ↗ | Hugging Face ↗</span></div>
+          <div style="font-size: 10px; color: #666; margin-bottom: 6px; font-style: italic;">Python, PyTorch, HuggingFace PEFT, QLoRA, CodeLlama-7B, bitsandbytes, FastAPI, Gradio</div>
+          <ul style="font-size: 11px; line-height: 1.55; color: #333; margin: 0; padding-left: 16px;">
+            <li>Slashed MTTR by 94.6% – from 147 minutes to under 8 minutes – by building an AI-driven Root Cause Analysis system that automatically identifies failure root causes with 91.2% accuracy using causal discovery, RAG, and LangGraph agents.</li>
+            <li>Deployed a production-grade LLM-powered platform using LangChain, FAISS, PyTorch, and Docker on Hugging Face Spaces, achieving 99.97% uptime and reducing false positives by 74.9% with a safety-constrained agent that ensures zero violations across 10,000+ simulated runs.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 0 0 10px;">Certifications</h2>
+        <ul style="font-size: 11.5px; line-height: 1.7; color: #333; margin: 0; padding-left: 16px;">
+          <li>Software Engineer — HackerRank Certified <span style="color: #666;">View Certificate ↗</span></li>
+          <li>Software Engineer Intern — HackerRank Certified <span style="color: #666;">View Certificate ↗</span></li>
+          <li>SQL (Advanced) — HackerRank Certified <span style="color: #666;">View Certificate ↗</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===============================================
+//  REVEAL ON SCROLL & HERO WORD ANIMATION
+// ===============================================
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+setTimeout(() => {
+  document.querySelectorAll('.word').forEach((w, i) => {
+    setTimeout(() => w.classList.add('in'), 100 + i * 120);
+  });
+}, 200);
+
+// ===============================================
+//  TECH CHIPS -> GOOGLE SEARCH
+// ===============================================
+document.querySelectorAll('.tech').forEach(chip => {
+  chip.addEventListener('click', (e) => {
+    if (chip.style.cursor === 'default') return;
+    const q = chip.dataset.search || chip.textContent.trim();
+    window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
+    chip.style.background = 'var(--acid)';
+    chip.style.color = 'var(--ink)';
+    setTimeout(() => {
+      chip.style.background = '';
+      chip.style.color = '';
+    }, 400);
+  });
+});
+
+// ===============================================
+//  AI ASSISTANT CHATBOT LOGIC
+// ===============================================
+const aiFab = document.getElementById('aiFab');
+const aiPanel = document.getElementById('aiPanel');
+const aiClose = document.getElementById('aiClose');
+const aiBody = document.getElementById('aiBody');
+const aiInput = document.getElementById('aiInput');
+const aiSend = document.getElementById('aiSend');
+
+// Knowledge Base for the Chatbot
+const knowledgeBase = [
+  {
+    keys: ['project', 'work', 'portfolio', 'case study', 'built', 'made', 'create'],
+    response: "Sudhansu has shipped two major production systems:\n1. F1 Tyre Degradation & Race Strategy Simulation Engine (PyTorch PINN, 0.054s RMSE, deployed on Hugging Face).\n2. LLM-powered Root Cause Analysis System (LangChain, CodeLlama-7B, reduced MTTR by 94.6%)."
+  },
+  {
+    keys: ['f1', 'tyre', 'pinn', 'race', 'formula'],
+    response: "The F1 Tyre project uses a Physics-Informed Neural Network (PINN) in PyTorch to predict lap times and race strategy. It achieved 0.054s RMSE, 18% accuracy gain over baseline, and a 2.3-second reduction in simulated race time. It's deployed on Hugging Face Spaces with sub-100ms inference."
+  },
+  {
+    keys: ['rca', 'root cause', 'llm', 'langchain', 'incident', 'mttr'],
+    response: "The RCA system uses QLoRA-fine-tuned CodeLlama-7B with LangGraph agents. It slashed MTTR from 147 minutes to under 8 minutes (94.6% reduction) with 91.2% accuracy. It maintains 99.97% uptime on Hugging Face Spaces."
+  },
+  {
+    keys: ['tech', 'stack', 'skill', 'framework', 'language', 'tool', 'use'],
+    response: "Sudhansu's core stack:\n- AI/ML: PyTorch, LangChain, LangGraph, HuggingFace, FAISS, OpenCV.\n- Backend: Java, Spring Boot, Hibernate, FastAPI.\n- Data: MySQL, MongoDB, Redis, Pandas, NumPy.\n- DevOps: Docker, Git, GitHub."
+  },
+  {
+    keys: ['education', 'college', 'bput', 'degree', 'university', 'study', 'cgpa', 'grade'],
+    response: "He is pursuing a B.Tech in CSE (Artificial Intelligence & Machine Learning) from Biju Patnaik University of Technology (BPUT), Rourkela. He will graduate in 05/2026 with a current CGPA of 7.18."
+  },
+  {
+    keys: ['certificate', 'certification', 'hackerrank', 'badge'],
+    response: "Sudhansu is HackerRank Certified in:\n1. Software Engineer\n2. Software Engineer Intern\n3. SQL (Advanced)\nYou can view his profile at hackerrank.com/profile/ssekhar_panda06."
+  },
+  {
+    keys: ['contact', 'email', 'phone', 'reach', 'hire', 'job', 'available'],
+    response: "You can reach Sudhansu at:\n- Email: ssekhar.panda06@gmail.com\n- Phone: +91 70089 97117\n- WhatsApp: Click the green button on the bottom left!\nHe is currently open to SDE-1 and ML Engineer roles."
+  },
+  {
+    keys: ['hobby', 'hobbies', 'life', 'outside', 'free time', 'interest'],
+    response: "When the laptop closes, Sudhansu enjoys:\n1. Cycling 🚴 (long-distance rides)\n2. Reading 📖 (systems-design & philosophy)\n3. Swimming 🏊 (quiet laps)\n4. Cricket 🏏 (strategy under pressure)"
+  },
+  {
+    keys: ['frontier', 'exploring', 'future', 'research', 'learning', 'mamba', 'rust', 'ode'],
+    response: "Sudhansu is currently exploring 4 tracks:\nA. Specialized Architectures (Graph RAG, Neural ODEs, Mamba)\nB. Distributed Infra (Rust ML, Megatron parallelism)\nC. Cognitive Systems (World Models/JEPA, Neuro-Symbolic AI)\nD. Continual Learning (Liquid Neural Networks, EWC)"
+  },
+  {
+    keys: ['resume', 'cv', 'download', 'pdf'],
+    response: "You can view and download his full resume by clicking the 'Resume' button in the navigation bar or the hero section!"
+  },
+  {
+    keys: ['who', 'about', 'sudhansu', 'you', 'yourself', 'summary'],
+    response: "Sudhansu Sekhar Panda is an aspiring AI/ML Engineer based in Bhubaneswar, India. He builds production-grade systems using PyTorch, LangChain, and Docker. He is passionate about physics-infused AI, dynamic temporal modeling, and production systems engineering."
+  },
+  {
+    keys: ['github', 'linkedin', 'leetcode', 'kaggle', 'hugging face', 'link', 'social'],
+    response: "You can find him on:\n- LinkedIn: in/sudhansu-sekhar-panda\n- GitHub: @Sudhansu-Sekhar12\n- Hugging Face: @sudhansu06\n- LeetCode: @Sudhansu_06\n- Kaggle: @sudhansu06\n- HackerRank: @ssekhar_panda06"
+  }
+];
+
+function getBotResponse(text) {
+  const input = text.toLowerCase().trim();
+  if (!input) return "Please type a question.";
+
+  for (const item of knowledgeBase) {
+    if (item.keys.some(k => input.includes(k))) {
+      return item.response;
+    }
+  }
+
+  // Fallback for irrelevant questions
+  return "I'm not comfortable sharing that. I can only answer questions about Sudhansu's projects, tech stack, education, or experience.";
+}
+
+function addMessage(text, sender) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `ai-message ${sender}`;
+  msgDiv.textContent = text;
+  aiBody.appendChild(msgDiv);
+  aiBody.scrollTop = aiBody.scrollHeight;
+}
+
+function handleUserMessage(text) {
+  addMessage(text, 'user');
+  setTimeout(() => {
+    const response = getBotResponse(text);
+    addMessage(response, 'bot');
+  }, 500);
+}
+
+aiFab.addEventListener('click', (e) => {
+  e.stopPropagation();
+  aiPanel.classList.toggle('open');
+  if (aiPanel.classList.contains('open')) {
+    setTimeout(() => aiInput.focus(), 100);
+  }
+});
+
+aiClose.addEventListener('click', (e) => {
+  e.stopPropagation();
+  aiPanel.classList.remove('open');
+});
+
+aiPanel.addEventListener('click', (e) => e.stopPropagation());
+
+document.addEventListener('click', (e) => {
+  if (!aiPanel.contains(e.target) && !aiFab.contains(e.target)) {
+    aiPanel.classList.remove('open');
+  }
+});
+
+aiSend.addEventListener('click', () => {
+  const text = aiInput.value;
+  if (text.trim()) {
+    handleUserMessage(text);
+    aiInput.value = '';
+  }
+});
+
+aiInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    aiSend.click();
+  }
+});
+
+document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const q = btn.dataset.q;
+    handleUserMessage(q);
+  });
+});
+
+// ===============================================
+//  MOBILE MENU
+// ===============================================
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const mobileClose = document.getElementById('mobileClose');
+
+mobileToggle.addEventListener('click', () => mobileDrawer.classList.add('open'));
+mobileClose.addEventListener('click', () => mobileDrawer.classList.remove('open'));
+document.querySelectorAll('.mobile-link').forEach(l => {
+  l.addEventListener('click', () => mobileDrawer.classList.remove('open'));
+});
+
+// ===============================================
+//  RESUME MODAL
+// ===============================================
+const resumeModal = document.getElementById('resumeModal');
+function openResume() {
+  resumeModal.classList.add('open');
+  mobileDrawer.classList.remove('open');
+  closeCmd();
+}
+function closeResume() {
+  resumeModal.classList.remove('open');
+}
+document.getElementById('resumeBtn').addEventListener('click', openResume);
+document.getElementById('resumeBtnMobile').addEventListener('click', openResume);
+document.getElementById('resumeBtnHero').addEventListener('click', openResume);
+resumeModal.addEventListener('click', (e) => {
+  if (e.target === resumeModal) closeResume();
+});
+
+// ===============================================
+//  VISUAL SVG GENERATORS
+// ===============================================
+(function buildNeural() {
+  const group = document.getElementById('networkGroup');
+  if (!group) return;
+  const layers = [
+    { count: 4, x: 100, yStart: 130, yGap: 80 },
+    { count: 6, x: 220, yStart: 90, yGap: 65 },
+    { count: 6, x: 340, yStart: 90, yGap: 65 },
+    { count: 3, x: 460, yStart: 170, yGap: 100 }
+  ];
+  const nodes = [];
+  layers.forEach((layer, li) => {
+    for (let i = 0; i < layer.count; i++) {
+      const y = layer.yStart + i * layer.yGap;
+      const acid = (li === 1 && i === 2) || (li === 2 && i === 3) || (li === 3 && i === 1);
+      nodes.push({ x: layer.x, y, layer: li, acid });
+    }
+  });
+  let linksHTML = '';
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = 0; j < nodes.length; j++) {
+      if (nodes[i].layer + 1 === nodes[j].layer) {
+        const n1 = nodes[i], n2 = nodes[j];
+        const cx1 = (n1.x + n2.x) / 2, cy1 = n1.y;
+        const cx2 = (n1.x + n2.x) / 2, cy2 = n2.y;
+        linksHTML += `<path class="nlink" d="M ${n1.x},${n1.y} C ${cx1},${cy1} ${cx2},${cy2} ${n2.x},${n2.y}"/>`;
+      }
+    }
+  }
+  let nodesHTML = '';
+  nodes.forEach((n) => {
+    const r = n.acid ? 7 : 5;
+    const cls = n.acid ? 'nnode-acid' : 'nnode';
+    nodesHTML += `<circle class="${cls}" cx="${n.x}" cy="${n.y}" r="${r}">${n.acid ? `<animate attributeName="r" values="${r};${r+2};${r}" dur="2.5s" repeatCount="indefinite"/>` : ''}</circle>`;
+  });
+  let signalsHTML = '';
+  for (let k = 0; k < 4; k++) {
+    const n1 = nodes[Math.floor(Math.random() * 4)];
+    const layer1 = nodes.filter(n => n.layer === 1);
+    const n2 = layer1[Math.floor(Math.random() * layer1.length)];
+    const cx1 = (n1.x + n2.x) / 2, cy1 = n1.y;
+    const cx2 = (n1.x + n2.x) / 2, cy2 = n2.y;
+    const pathD = `M ${n1.x},${n1.y} C ${cx1},${cy1} ${cx2},${cy2} ${n2.x},${n2.y}`;
+    signalsHTML += `<path id="sig${k}" d="${pathD}" fill="none" stroke="none"/>`;
+    signalsHTML += `<circle r="2.5" class="nsignal"><animateMotion dur="${3+k}s" repeatCount="indefinite" begin="${k*0.7}s"><mpath href="#sig${k}"/></animateMotion></circle>`;
+  }
+  group.innerHTML = linksHTML + signalsHTML + nodesHTML;
+})();
+
+(function buildF1Tyres() {
+  const g = document.getElementById('tyreMarkers');
+  if (!g) return;
+  const positions = [
+    { x: 80, y: 290, label: 'C1' },
+    { x: 200, y: 220, label: 'C2' },
+    { x: 350, y: 195, label: 'C3' },
+    { x: 500, y: 230, label: 'C4' },
+    { x: 670, y: 305, label: 'C5' }
+  ];
+  let html = '';
+  positions.forEach((p) => {
+    html += `<g transform="translate(${p.x},${p.y})"><circle r="10" fill="none" stroke="#F1ECE0" stroke-width="1.5" opacity="0.8"/><circle r="4" fill="#C8FF3D"/><text x="0" y="-18" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#F1ECE0">${p.label}</text></g>`;
+  });
+  g.innerHTML = html;
+})();
+
+// ===============================================
+//  COUNTERS
+// ===============================================
+const counters = document.querySelectorAll('.counter');
+const counterIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0');
+      const duration = 1800;
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(decimals);
+      }
+      requestAnimationFrame(tick);
+      counterIO.unobserve(el);
+    }
+  });
+}, { threshold: 0.4 });
+counters.forEach(c => counterIO.observe(c));
+
+// ===============================================
+//  CUSTOM CURSOR & MAGNETIC BUTTONS
+// ===============================================
+const cursor = document.getElementById('cursor');
+let cx=0, cy=0, tx=0, ty=0;
+document.addEventListener('mousemove', (e) => {
+  tx = e.clientX;
+  ty = e.clientY;
+});
+function followCursor() {
+  cx += (tx - cx) * 0.18;
+  cy += (ty - cy) * 0.18;
+  if (cursor) cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+  requestAnimationFrame(followCursor);
+}
+followCursor();
+
+document.querySelectorAll('a, button, .tech').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    if (cursor) {
+      cursor.style.width = '32px';
+      cursor.style.height = '32px';
+    }
+  });
+  el.addEventListener('mouseleave', () => {
+    if (cursor) {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+    }
+  });
+});
+
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.25}px, ${y * 0.4}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotateX = (y / rect.height) * -10;
+    const rotateY = (x / rect.width) * 10;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ===============================================
+//  LIVE CLOCK
+// ===============================================
+function updateClock() {
+  const el = document.getElementById('liveClock');
+  if (!el) return;
+  const now = new Date();
+  const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  el.textContent = new Intl.DateTimeFormat('en-GB', options).format(now);
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ===============================================
+//  COMMAND PALETTE
+// ===============================================
+const cmdOverlay = document.getElementById('cmdOverlay');
+const cmdInput = document.getElementById('cmdInput');
+const cmdList = document.getElementById('cmdList');
+let cmdActiveIndex = 0;
+
+const cmdActions = [
+  { name: "Go to Manifesto", cat: "Navigate", action: () => location.hash = "#manifesto" },
+  { name: "Go to Work / Projects", cat: "Navigate", action: () => location.hash = "#work" },
+  { name: "Go to Tech Stack", cat: "Navigate", action: () => location.hash = "#stack" },
+  { name: "Go to Credentials", cat: "Navigate", action: () => location.hash = "#credentials" },
+  { name: "Go to Hobbies / Life", cat: "Navigate", action: () => location.hash = "#life" },
+  { name: "Go to The Frontier", cat: "Navigate", action: () => location.hash = "#frontier" },
+  { name: "Go to Contact / Hiring", cat: "Navigate", action: () => location.hash = "#contact" },
+  { name: "View Resume (Print / PDF)", cat: "Action", action: openResume },
+  { name: "Open WhatsApp Chat", cat: "Contact", action: () => window.open('https://wa.me/917008997117', '_blank') },
+  { name: "Send Email", cat: "Contact", action: () => window.location.href = 'mailto:ssekhar.panda06@gmail.com' },
+  { name: "Open AI Assistant", cat: "Action", action: () => aiPanel.classList.add('open') }
+];
+
+function renderCmdList(filter = "") {
+  const filtered = cmdActions.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()));
+  cmdActiveIndex = 0;
+  cmdList.innerHTML = filtered.length ? filtered.map((a, i) =>
+    `<div class="cmd-item ${i === 0 ? 'active' : ''}" data-i="${i}"><span>${a.name}</span><span class="cmd-cat">${a.cat}</span></div>`
+  ).join('') : `<div class="cmd-item"><span style="opacity:0.5">No results found</span></div>`;
+
+  cmdList.querySelectorAll('.cmd-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const idx = parseInt(item.dataset.i);
+      if (!isNaN(idx) && filtered[idx]) {
+        filtered[idx].action();
+        closeCmd();
+      }
+    });
+    item.addEventListener('mouseenter', () => {
+      cmdList.querySelectorAll('.cmd-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      cmdActiveIndex = parseInt(item.dataset.i) || 0;
+    });
+  });
+}
+
+function openCmd() {
+  cmdOverlay.classList.add('open');
+  cmdInput.value = '';
+  renderCmdList();
+  setTimeout(() => cmdInput.focus(), 100);
+}
+
+function closeCmd() {
+  cmdOverlay.classList.remove('open');
+}
+
+document.getElementById('cmdTrigger').addEventListener('click', openCmd);
+cmdOverlay.addEventListener('click', (e) => {
+  if (e.target === cmdOverlay) closeCmd();
+});
+cmdInput.addEventListener('input', (e) => renderCmdList(e.target.value));
+cmdInput.addEventListener('keydown', (e) => {
+  const items = cmdList.querySelectorAll('.cmd-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    cmdActiveIndex = Math.min(items.length - 1, cmdActiveIndex + 1);
+    updateActive();
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    cmdActiveIndex = Math.max(0, cmdActiveIndex - 1);
+    updateActive();
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    items[cmdActiveIndex]?.click();
+  }
+});
+
+function updateActive() {
+  cmdList.querySelectorAll('.cmd-item').forEach((i, idx) => i.classList.toggle('active', idx === cmdActiveIndex));
+  cmdList.querySelectorAll('.cmd-item')[cmdActiveIndex]?.scrollIntoView({ block: 'nearest' });
+}
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    cmdOverlay.classList.contains('open') ? closeCmd() : openCmd();
+  }
+  if (e.key === 'Escape') {
+    closeCmd();
+    closeResume();
+    aiPanel.classList.remove('open');
+    mobileDrawer.classList.remove('open');
+  }
+});
+
+// ===============================================
+//  SCROLL PROGRESS & BACK TO TOP
+// ===============================================
+const progress = document.getElementById('progress');
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  const sh = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / sh) * 100;
+  progress.style.width = pct + '%';
+  if (window.scrollY > 600) backTop.classList.add('show');
+  else backTop.classList.remove('show');
+});
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
