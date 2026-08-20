@@ -52,10 +52,17 @@ Track B: Rust for ML Inference (Candle), Megatron Model Parallelism (TP/PP)
 Track C: World Models / JEPA, Neuro-Symbolic AI
 Track D: Liquid Neural Networks, Elastic Weight Consolidation (EWC)
 📫 Connect with Me
+
 LinkedIn: in/sudhansu-sekhar-panda
+
 GitHub: @Sudhansu-Sekhar12
+
 Hugging Face: @sudhansu06
+
 LeetCode: @Sudhansu_06
+
 Kaggle: @sudhansu06
-HackerRank: @ssekhar_panda06
+ 
+ HackerRank: @ssekhar_panda06
+
 Email: ssekhar.panda06@gmail.com
